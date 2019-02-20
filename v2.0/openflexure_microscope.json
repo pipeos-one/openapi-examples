@@ -1,0 +1,291 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the server for OpenFlexure",
+    "version": "1.0.0",
+    "title": "OpenFlexure"
+  },
+  "host": "192.168.1.107:5000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "stage",
+      "description": "Everything about the stage",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://www.openflexure.org/"
+      }
+    },
+    {
+      "name": "camera",
+      "description": "Access to stream, capture"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about OpenFlexure",
+        "url": "https://www.openflexure.org/"
+      }
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/stage/position": {
+      "post": {
+        "tags": [
+          "stage"
+        ],
+        "summary": "Change the stage position.",
+        "description": "",
+        "operationId": "addStageAction",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Object that describes the stage action",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StageAction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/StageStatus"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "stage"
+        ],
+        "summary": "Update the stage",
+        "description": "",
+        "operationId": "updateStage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/StageStatus"
+              }
+            }
+          },
+          "404": {
+            "description": "Stage not found"
+          }
+        }
+      }
+    },
+    "/camera/capture": {
+      "post": {
+        "tags": [
+          "camera"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Object that describes the stage action",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CameraAction"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/CameraStatus"
+              }
+            }
+          },
+          "404": {
+            "description": "Camera not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CameraAction": {
+      "type": "object",
+      "required": [
+        "filename"
+      ],
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "temporary": {
+          "type": "boolean",
+          "default": false
+        },
+        "use_video_port": {
+          "type": "boolean",
+          "default": true
+        },
+        "bayer": {
+          "type": "boolean",
+          "default": true
+        },
+        "size": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "height": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      }
+    },
+    "CameraStatus": {
+      "type": "object",
+      "required": [
+        "filename"
+      ],
+      "properties": {
+        "available": {
+          "type": "boolean",
+          "default": true
+        },
+        "filename": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "temporary": {
+          "type": "boolean"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string"
+        },
+        "stream": {
+          "type": "boolean"
+        },
+        "uri": {
+          "type": "object",
+          "properties": {
+            "dowload": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "coord": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "StageStatus": {
+      "type": "object",
+      "required": [
+        "stage"
+      ],
+      "properties": {
+        "stage": {
+          "type": "object",
+          "required": [
+            "position"
+          ],
+          "properties": {
+            "position": {
+              "type": "object",
+              "required": [
+                "x",
+                "y",
+                "z"
+              ],
+              "properties": {
+                "x": {
+                  "$ref": "#/definitions/coord"
+                },
+                "y": {
+                  "$ref": "#/definitions/coord"
+                },
+                "z": {
+                  "$ref": "#/definitions/coord"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "StageAction": {
+      "type": "object",
+      "required": [
+        "absolute",
+        "x",
+        "y",
+        "z"
+      ],
+      "properties": {
+        "absolute": {
+          "type": "boolean",
+          "default": false
+        },
+        "x": {
+          "$ref": "#/definitions/coord"
+        },
+        "y": {
+          "$ref": "#/definitions/coord"
+        },
+        "z": {
+          "$ref": "#/definitions/coord"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
