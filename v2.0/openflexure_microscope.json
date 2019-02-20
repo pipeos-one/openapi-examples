@@ -40,7 +40,7 @@
           "stage"
         ],
         "summary": "Change the stage position.",
-        "description": "",
+        "description": "Change the stage position based on the provided coordinates.",
         "operationId": "addStageAction",
         "consumes": [
           "application/json"
@@ -51,8 +51,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "body",
-            "description": "Object that describes the stage action",
+            "name": "stageAction",
+            "description": "Object that describes the stage action coordinates",
             "required": true,
             "schema": {
               "$ref": "#/definitions/StageAction"
@@ -63,10 +63,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/StageStatus"
-              }
+              "$ref": "#/definitions/StageStatus"
             }
           },
           "405": {
@@ -78,9 +75,9 @@
         "tags": [
           "stage"
         ],
-        "summary": "Update the stage",
-        "description": "",
-        "operationId": "updateStage",
+        "summary": "Get the current state coordinates",
+        "description": "Get the current state coordinates",
+        "operationId": "getStage",
         "consumes": [
           "application/json"
         ],
@@ -91,10 +88,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/StageStatus"
-              }
+              "$ref": "#/definitions/StageStatus"
             }
           },
           "404": {
@@ -105,6 +99,7 @@
     },
     "/camera/capture": {
       "post": {
+        "description": "Trigger a camera caption, based on the given parameters",
         "tags": [
           "camera"
         ],
@@ -117,8 +112,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "body",
-            "description": "Object that describes the stage action",
+            "name": "cameraAction",
+            "description": "Object that describes the camera action",
             "required": true,
             "schema": {
               "$ref": "#/definitions/CameraAction"
@@ -129,10 +124,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "object",
-              "items": {
-                "$ref": "#/definitions/CameraStatus"
-              }
+              "$ref": "#/definitions/CameraStatus"
             }
           },
           "404": {
