@@ -66,12 +66,26 @@
         "variables": {
           "type": "object",
           "default": null
+        },
+        "operationName": {
+          "type": "string",
+          "default": ""
         }
       }
     },
     "Response": {
-      "type": "string",
-      "format": "json"
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
     }
   }
 }
