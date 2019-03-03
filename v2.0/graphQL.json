@@ -1,0 +1,77 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the server for General GraphQL",
+    "version": "1.0.0",
+    "title": "GraphQL"
+  },
+  "host": "api.thegraph.com",
+  "basePath": "/subgraphs/name/jannis",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/cryptokitties-events": {
+      "post": {
+        "summary": "GraphQl query.",
+        "description": "GraphQl query.",
+        "operationId": "query",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "Object that describes the query",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Query"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Query": {
+      "type": "object",
+      "required": [
+        "query",
+        "variables"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "default": "{}"
+        },
+        "variables": {
+          "type": "object",
+          "default": null
+        }
+      }
+    },
+    "Response": {
+      "type": "string",
+      "format": "json"
+    }
+  }
+}
