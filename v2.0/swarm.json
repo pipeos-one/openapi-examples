@@ -1,0 +1,88 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Swarm API",
+    "version": "1.0.0",
+    "title": "SwarmOpenAPI"
+  },
+  "host": "swarm-gateways.net",
+  "basePath": "/",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/bzz-raw:/{hash}": {
+      "get": {
+        "description": "Get content at hash",
+        "operationId": "getRawContent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "hash",
+            "in": "path",
+            "description": "Swarm hash",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "content",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/bzz-raw:/": {
+      "post": {
+        "description": "Post content on Swarm",
+        "operationId": "postRawContent",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "Object that describes the query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "hash",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "error"
+          }
+        }
+      }
+    }
+  }
+}
