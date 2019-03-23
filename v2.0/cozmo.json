@@ -1,0 +1,293 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the server for controlling Cozmo with Pipeline",
+    "version": "1.0.0",
+    "title": "Cozmo Bot"
+  },
+  "host": "127.0.0.1:5000",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/updateCozmo": {
+      "post": {
+        "description": "Get data",
+        "operationId": "updateCozmo",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/keydown": {
+      "post": {
+        "summary": "Control Cozmo by keys.",
+        "description": "Control Cozmo by keys.",
+        "operationId": "keyDown",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "key",
+            "description": "Object that describes the key",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/keyup": {
+      "post": {
+        "summary": "Control Cozmo by keys.",
+        "description": "Control Cozmo by keys.",
+        "operationId": "keyUp",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "key",
+            "description": "Object that describes the key",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/dropDownSelect": {
+      "post": {
+        "summary": "Change the animation available to the keys 0-9.",
+        "description": "Change the animation available to the keys 0-9.",
+        "operationId": "changeAnimation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Anim",
+            "description": "Object that describes the Animation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Anim"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/sayText": {
+      "post": {
+        "summary": "Make Cozmo say a text.",
+        "description": "Make Cozmo say a text.",
+        "operationId": "sayText",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Say",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Say"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Response"
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Key": {
+      "type": "object",
+      "required": [
+        "keyCode",
+        "hasShift",
+        "hasCtrl",
+        "hasAlt"
+      ],
+      "properties": {
+        "keyCode": {
+          "type": "integer",
+          "enum": [
+            87,
+            83,
+            65,
+            68,
+            82,
+            70,
+            84,
+            71,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            32
+          ],
+          "description": "Control codes: * Forward * Backward * Turn Left * Turn Right * Lift Fork * Lower Fork * Head Up * Head Down * Perform Animation 0 * Perform Animation 1 * Perform Animation 2 * Perform Animation 3 * Perform Animation 4 * Perform Animation 5 * Perform Animation 6 * Perform Animation 7 * Perform Animation 8 * Perform Animation 9 * Say Text\n"
+        },
+        "hasShift": {
+          "type": "integer",
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "hasCtrl": {
+          "type": "integer",
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "hasAlt": {
+          "type": "integer",
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
+        }
+      }
+    },
+    "Response": {
+      "type": "object"
+    },
+    "Anim": {
+      "type": "object",
+      "required": [
+        "selectedIndex",
+        "ItemName"
+      ],
+      "properties": {
+        "selectedIndex": {
+          "type": "integer"
+        },
+        "ItemName": {
+          "type": "string",
+          "description": "Which key should change? (0-9)",
+          "enum": [
+            "animSelector0",
+            "animSelector1",
+            "animSelector2",
+            "animSelector3",
+            "animSelector4",
+            "animSelector5",
+            "animSelector6",
+            "animSelector7",
+            "animSelector8",
+            "animSelector9"
+          ]
+        }
+      }
+    },
+    "Say": {
+      "type": "object",
+      "properties": {
+        "textEntered": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
